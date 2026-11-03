@@ -239,7 +239,7 @@ main {
 }
 
 .table-wrapper:focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 3px solid var(--color-accent);
   outline-offset: 3px;
 }
 
@@ -515,5 +515,12 @@ main {
 
   .site-header {
     position: static;
+  }
+}
+
+/* Учитываем системную настройку уменьшения анимации. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
