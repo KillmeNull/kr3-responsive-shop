@@ -14,6 +14,7 @@
   <script src="js/main.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Перейти к основному содержимому</a>
   <header class="site-header">
     <div class="site-header__inner">
       <a class="site-header__logo" href="index.html">Перекупы 1С</a>
@@ -32,12 +33,12 @@
     </div>
   </header>
 
-  <main>
+  <main id="main" tabindex="-1">
     <nav class="breadcrumbs" aria-label="Хлебные крошки">
       <a class="breadcrumbs__link" href="index.html">Главная</a>
       <span class="breadcrumbs__separator" aria-hidden="true">/</span>
       <a class="breadcrumbs__link" href="catalog.html">Каталог</a>
-      <span class="breadcrumbs__current">Коробочка 1С:Бухгалтерия</span>
+      <span class="breadcrumbs__current" aria-current="page">Коробочка 1С:Бухгалтерия</span>
     </nav>
 
     <article class="product">
@@ -81,27 +82,27 @@
           </thead>
           <tbody>
             <tr>
-              <td class="product-table__cell">Категория</td>
+              <th class="product-table__cell" scope="row">Категория</th>
               <td class="product-table__cell">Программное обеспечение</td>
             </tr>
             <tr>
-              <td class="product-table__cell">Цена</td>
+              <th class="product-table__cell" scope="row">Цена</th>
               <td class="product-table__cell">2000 руб.</td>
             </tr>
             <tr>
-              <td class="product-table__cell">Наличие</td>
+              <th class="product-table__cell" scope="row">Наличие</th>
               <td class="product-table__cell">В наличии</td>
             </tr>
             <tr>
-              <td class="product-table__cell">Формат поставки</td>
+              <th class="product-table__cell" scope="row">Формат поставки</th>
               <td class="product-table__cell">Коробочная версия</td>
             </tr>
             <tr>
-              <td class="product-table__cell">Назначение</td>
+              <th class="product-table__cell" scope="row">Назначение</th>
               <td class="product-table__cell">Бухгалтерский и налоговый учёт</td>
             </tr>
             <tr>
-              <td class="product-table__cell">Срок доставки</td>
+              <th class="product-table__cell" scope="row">Срок доставки</th>
               <td class="product-table__cell">1–3 дня</td>
             </tr>
           </tbody>

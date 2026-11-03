@@ -14,6 +14,7 @@
   <script src="js/main.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Перейти к основному содержимому</a>
   <header class="site-header">
     <div class="site-header__inner">
       <a class="site-header__logo" href="index.html">Перекупы 1С</a>
@@ -32,25 +33,25 @@
     </div>
   </header>
 
-  <main>
+  <main id="main" tabindex="-1">
     <nav class="breadcrumbs" aria-label="Хлебные крошки">
       <a class="breadcrumbs__link" href="index.html">Главная</a>
-      <span class="breadcrumbs__current">Заявка</span>
+      <span class="breadcrumbs__current" aria-current="page">Заявка</span>
     </nav>
 
     <section class="section">
       <h1>Оформление заявки</h1>
       <p>
-        Заполните форму, чтобы оставить заявку. Обязательные поля: имя, e-mail,
+        Заполните форму, чтобы оставить заявку. Обязательные поля: имя (не менее двух символов), e-mail,
         телефон, тема заявки и согласие на обработку данных.
       </p>
 
-      <form class="order-form order-form--page" id="order-form" action="#" method="post" novalidate>
+      <form class="order-form order-form--page" id="order-form" action="#" method="post">
         <div class="order-form__field">
           <label class="order-form__label" for="order-name">Имя</label>
           <input
             class="order-form__input"
-            id="order-name"
+            id="order-name" aria-describedby="order-name-error"
             name="name"
             type="text"
             placeholder="Введите ваше имя"
@@ -58,54 +59,60 @@
             autocomplete="given-name"
             required
           >
+          <small class="order-form__error" id="order-name-error" hidden></small>
         </div>
 
         <div class="order-form__field">
           <label class="order-form__label" for="order-email">E-mail</label>
           <input
             class="order-form__input"
-            id="order-email"
+            id="order-email" aria-describedby="order-email-error"
             name="email"
             type="email"
             placeholder="example@mail.ru"
             autocomplete="email"
             required
           >
+          <small class="order-form__error" id="order-email-error" hidden></small>
         </div>
 
         <div class="order-form__field">
           <label class="order-form__label" for="order-phone">Телефон</label>
           <input
             class="order-form__input"
-            id="order-phone"
+            id="order-phone" aria-describedby="order-phone-hint order-phone-error"
             name="phone"
             type="tel"
             inputmode="tel"
+            autocomplete="tel"
             placeholder="+7 (900) 000-00-00"
             pattern="^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$"
             required
           >
-          <small class="order-form__hint">Формат: +7 (900) 000-00-00</small>
+          <small class="order-form__hint" id="order-phone-hint">Формат: +7 (900) 000-00-00</small>
+          <small class="order-form__error" id="order-phone-error" hidden></small>
         </div>
 
         <div class="order-form__field">
           <label class="order-form__label" for="order-date">Дата связи</label>
           <input
             class="order-form__input"
-            id="order-date"
+            id="order-date" aria-describedby="order-date-error"
             name="date"
             type="date"
           >
+          <small class="order-form__error" id="order-date-error" hidden></small>
         </div>
 
         <div class="order-form__field order-form__field--wide">
           <label class="order-form__label" for="order-topic">Тема заявки</label>
-          <select class="order-form__select" id="order-topic" name="topic" required>
+          <select class="order-form__select" id="order-topic" aria-describedby="order-topic-error" name="topic" required>
             <option value="">Выберите тему</option>
             <option value="product">Заказ товара</option>
             <option value="consultation">Консультация</option>
             <option value="delivery">Доставка</option>
           </select>
+          <small class="order-form__error" id="order-topic-error" hidden></small>
         </div>
 
         <div class="order-form__field order-form__field--wide">
@@ -123,22 +130,25 @@
           <label class="order-form__label">
             <input
               class="order-form__checkbox"
-              id="order-agreement"
+              id="order-agreement" aria-describedby="order-agreement-error"
               name="agreement"
               type="checkbox"
               required
             >
             Я согласен на обработку данных
           </label>
+          <small class="order-form__error" id="order-agreement-error" hidden></small>
         </div>
+
+        <p class="order-form__summary" id="order-form-summary" role="alert" hidden></p>
 
         <div class="order-form__actions">
           <button class="button button--primary" type="submit">Отправить заявку</button>
         </div>
       </form>
 
-      <p class="success-message" id="success-message" hidden>
-        Форма успешно отправлена!
+      <p class="success-message" id="success-message" role="status" tabindex="-1" hidden>
+        Учебная заявка принята. Данные не отправлялись на сервер.
       </p>
     </section>
   </main>

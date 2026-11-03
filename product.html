@@ -14,6 +14,7 @@
   <script src="js/main.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Перейти к основному содержимому</a>
   <header class="site-header">
     <div class="site-header__inner">
       <a class="site-header__logo" href="index.html">Перекупы 1С</a>
@@ -32,12 +33,12 @@
     </div>
   </header>
 
-  <main>
+  <main id="main" tabindex="-1">
     <nav class="breadcrumbs" aria-label="Хлебные крошки">
       <a class="breadcrumbs__link" href="index.html">Главная</a>
       <span class="breadcrumbs__separator" aria-hidden="true">/</span>
       <a class="breadcrumbs__link" href="catalog.html">Каталог</a>
-      <span class="breadcrumbs__current">Калькулятор 1С</span>
+      <span class="breadcrumbs__current" aria-current="page">Калькулятор 1С</span>
     </nav>
 
     <article class="product">
@@ -81,27 +82,27 @@
           </thead>
           <tbody>
             <tr>
-              <td class="product-table__cell">Категория</td>
+              <th class="product-table__cell" scope="row">Категория</th>
               <td class="product-table__cell">Офисная техника</td>
             </tr>
             <tr>
-              <td class="product-table__cell">Цена</td>
+              <th class="product-table__cell" scope="row">Цена</th>
               <td class="product-table__cell">1000 руб.</td>
             </tr>
             <tr>
-              <td class="product-table__cell">Наличие</td>
+              <th class="product-table__cell" scope="row">Наличие</th>
               <td class="product-table__cell">В наличии</td>
             </tr>
             <tr>
-              <td class="product-table__cell">Разрядность дисплея</td>
+              <th class="product-table__cell" scope="row">Разрядность дисплея</th>
               <td class="product-table__cell">12 разрядов</td>
             </tr>
             <tr>
-              <td class="product-table__cell">Питание</td>
+              <th class="product-table__cell" scope="row">Питание</th>
               <td class="product-table__cell">Солнечная батарея и элемент питания</td>
             </tr>
             <tr>
-              <td class="product-table__cell">Гарантия</td>
+              <th class="product-table__cell" scope="row">Гарантия</th>
               <td class="product-table__cell">12 месяцев</td>
             </tr>
           </tbody>

@@ -14,6 +14,7 @@
   <script src="js/main.js" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#main">Перейти к основному содержимому</a>
   <header class="site-header">
     <div class="site-header__inner">
       <a class="site-header__logo" href="index.html">Перекупы 1С</a>
@@ -32,12 +33,12 @@
     </div>
   </header>
 
-  <main>
+  <main id="main" tabindex="-1">
     <nav class="breadcrumbs" aria-label="Хлебные крошки">
       <a class="breadcrumbs__link" href="index.html">Главная</a>
       <span class="breadcrumbs__separator" aria-hidden="true">/</span>
       <a class="breadcrumbs__link" href="catalog.html">Каталог</a>
-      <span class="breadcrumbs__current">Курс 1С разработчик</span>
+      <span class="breadcrumbs__current" aria-current="page">Курс 1С разработчик</span>
     </nav>
 
     <article class="product">
@@ -81,27 +82,27 @@
           </thead>
           <tbody>
             <tr>
-              <td class="product-table__cell">Категория</td>
+              <th class="product-table__cell" scope="row">Категория</th>
               <td class="product-table__cell">Обучение</td>
             </tr>
             <tr>
-              <td class="product-table__cell">Цена</td>
+              <th class="product-table__cell" scope="row">Цена</th>
               <td class="product-table__cell">5000 руб.</td>
             </tr>
             <tr>
-              <td class="product-table__cell">Запись</td>
+              <th class="product-table__cell" scope="row">Запись</th>
               <td class="product-table__cell">По заявке</td>
             </tr>
             <tr>
-              <td class="product-table__cell">Формат занятий</td>
+              <th class="product-table__cell" scope="row">Формат занятий</th>
               <td class="product-table__cell">Очно, в группе</td>
             </tr>
             <tr>
-              <td class="product-table__cell">Длительность</td>
+              <th class="product-table__cell" scope="row">Длительность</th>
               <td class="product-table__cell">8 недель</td>
             </tr>
             <tr>
-              <td class="product-table__cell">По окончании</td>
+              <th class="product-table__cell" scope="row">По окончании</th>
               <td class="product-table__cell">Сертификат о прохождении курса</td>
             </tr>
           </tbody>
