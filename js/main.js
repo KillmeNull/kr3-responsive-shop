@@ -1,3 +1,45 @@
+// На мобильном экране меню открывается кнопкой, без JavaScript ссылки видны сразу.
+const menuToggle = document.querySelector('.site-header__menu-toggle');
+const siteNavigation = document.querySelector('.site-nav');
+
+if (menuToggle && siteNavigation) {
+  const mobileNavigation = window.matchMedia('(max-width: 767px)');
+  let menuExpanded = false;
+
+  const updateNavigation = () => {
+    menuToggle.hidden = !mobileNavigation.matches;
+    menuToggle.setAttribute('aria-expanded', String(menuExpanded));
+    siteNavigation.hidden = mobileNavigation.matches && !menuExpanded;
+  };
+
+  menuToggle.addEventListener('click', () => {
+    menuExpanded = !menuExpanded;
+    updateNavigation();
+  });
+
+  siteNavigation.addEventListener('click', (event) => {
+    if (event.target.closest('a') && mobileNavigation.matches) {
+      menuExpanded = false;
+      updateNavigation();
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && mobileNavigation.matches && menuExpanded) {
+      menuExpanded = false;
+      updateNavigation();
+      menuToggle.focus();
+    }
+  });
+
+  mobileNavigation.addEventListener('change', () => {
+    menuExpanded = false;
+    updateNavigation();
+  });
+
+  updateNavigation();
+}
+
 // Получаем модальное окно по id.
 // На страницах без модального окна (например, order.html) здесь будет null.
 const orderDialog = document.getElementById('order-dialog');

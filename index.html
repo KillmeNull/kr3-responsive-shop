@@ -10,14 +10,16 @@
   <meta property="og:description" content="Учебный frontend-проект интернет-магазина.">
   <meta property="og:image" content="https://killmenull.github.io/kr1-html-css-shop/images/preview.jpg">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
   <script src="js/main.js" defer></script>
 </head>
 <body>
   <header class="site-header">
     <div class="site-header__inner">
       <a class="site-header__logo" href="index.html">Перекупы 1С</a>
+      <button class="button button--secondary site-header__menu-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" hidden>Меню</button>
 
-      <nav class="site-nav" aria-label="Основная навигация">
+      <nav class="site-nav" id="site-navigation" aria-label="Основная навигация">
         <ul class="site-nav__list">
           <li class="site-nav__item"><a class="site-nav__link site-nav__link--active" href="index.html">Главная</a></li>
           <li class="site-nav__item"><a class="site-nav__link" href="catalog.html">Каталог</a></li>
@@ -31,16 +33,28 @@
   </header>
   <main>
     <section class="hero">
-      <h1>Учебный интернет-магазин</h1>
-      <p>
-        Это стартовая страница учебного frontend-проекта.
-        В дальнейшем на её основе будет разработан многостраничный сайт
-        интернет-магазина или каталога услуг.
-      </p>
-      <div class="hero__actions">
-        <a class="button button--primary" href="#popular">Перейти к товарам</a>
-        <a class="button button--secondary" href="order.html">Оформить заявку</a>
+      <div class="hero__content">
+        <h1 class="hero__title">Учебный интернет-магазин</h1>
+        <p class="hero__description">
+          Калькуляторы, программы и обучение для работы с 1С.
+          Посмотрите товары, сравните характеристики и оставьте учебную заявку.
+        </p>
+        <div class="hero__actions">
+          <a class="button button--primary" href="#popular">Перейти к товарам</a>
+          <a class="button button--secondary" href="order.html">Оформить заявку</a>
+        </div>
       </div>
+      <picture class="hero__picture">
+        <source media="(min-width: 1200px)" srcset="images/hero-desktop.jpg" width="440" height="454">
+        <source media="(min-width: 768px)" srcset="images/hero-tablet.jpg" width="400" height="400">
+        <img
+          class="hero__image"
+          src="images/hero-mobile.jpg"
+          alt="Жёлтый настольный калькулятор 1С с красными клавишами"
+          width="320"
+          height="240"
+        >
+      </picture>
     </section>
     <section class="section" id="advantages">
       <h2 class="section__title">Наши преимущества</h2>
@@ -58,7 +72,21 @@
       <div class="products-grid">
         <article class="product-card product-card--featured">
           <span class="product-card__badge">Хит</span>
-          <img class="product-card__image" src="images/product-1.jpg" alt="Жёлтый настольный калькулятор 1С с красными клавишами" width="440" height="454">
+          <img
+          class="product-card__image"
+          src="images/product-1.jpg"
+          srcset="images/product-1-240.jpg 240w,
+                  images/product-1-320.jpg 320w,
+                  images/product-1.jpg 440w"
+          sizes="(min-width: 1232px) 356px,
+                 (min-width: 1024px) calc(33.3333vw - 55.3333px),
+                 (min-width: 640px) calc(50vw - 58px),
+                 calc(100vw - 66px)"
+          alt="Жёлтый настольный калькулятор 1С с красными клавишами"
+          width="440"
+          height="454"
+          loading="lazy"
+        >
           <h3 class="product-card__title"><a class="product-card__link" href="product.html">Калькулятор 1С</a></h3>
           <p class="product-card__description">Настольный 12-разрядный калькулятор в фирменных цветах для бухгалтера и кассира.</p>
           <p class="product-card__price">Цена: 1000 руб.</p>
@@ -68,7 +96,21 @@
         </article>
 
         <article class="product-card">
-          <img class="product-card__image" src="images/product-2.jpg" alt="Жёлтая коробка программы «1С:Бухгалтерия сельскохозяйственного предприятия» с изображением трактора" width="395" height="506">
+          <img
+          class="product-card__image"
+          src="images/product-2.jpg"
+          srcset="images/product-2-240.jpg 240w,
+                  images/product-2-320.jpg 320w,
+                  images/product-2.jpg 395w"
+          sizes="(min-width: 1232px) 356px,
+                 (min-width: 1024px) calc(33.3333vw - 55.3333px),
+                 (min-width: 640px) calc(50vw - 58px),
+                 calc(100vw - 66px)"
+          alt="Жёлтая коробка программы «1С:Бухгалтерия сельскохозяйственного предприятия» с изображением трактора"
+          width="395"
+          height="506"
+          loading="lazy"
+        >
           <h3 class="product-card__title"><a class="product-card__link" href="product-2.html">Коробочка 1С:Бухгалтерия</a></h3>
           <p class="product-card__description">Коробочная версия программы для ведения учёта на сельскохозяйственном предприятии.</p>
           <p class="product-card__price">Цена: 2000 руб.</p>
@@ -78,7 +120,23 @@
         </article>
 
         <article class="product-card">
-          <img class="product-card__image" src="images/product-3.jpg" alt="Преподаватель в жёлтой футболке 1С выступает с микрофоном на фоне плаката «1С:ERP»" width="800" height="775">
+          <img
+          class="product-card__image"
+          src="images/product-3.jpg"
+          srcset="images/product-3-240.jpg 240w,
+                  images/product-3-320.jpg 320w,
+                  images/product-3-480.jpg 480w,
+                  images/product-3-640.jpg 640w,
+                  images/product-3.jpg 800w"
+          sizes="(min-width: 1232px) 356px,
+                 (min-width: 1024px) calc(33.3333vw - 55.3333px),
+                 (min-width: 640px) calc(50vw - 58px),
+                 calc(100vw - 66px)"
+          alt="Преподаватель в жёлтой футболке 1С выступает с микрофоном на фоне плаката «1С:ERP»"
+          width="800"
+          height="775"
+          loading="lazy"
+        >
           <h3 class="product-card__title"><a class="product-card__link" href="product-3.html">Курс 1С разработчик</a></h3>
           <p class="product-card__description">Практический курс по разработке на платформе «1С:Предприятие» с опытным наставником.</p>
           <p class="product-card__price">Цена: 5000 руб.</p>
@@ -126,9 +184,8 @@
     <aside class="aside-info">
       <h2>Информация для студентов</h2>
       <p>
-        На следующих практических занятиях этот проект будет расширяться:
-        появятся формы, модальное окно, дополнительные страницы, Flex/Grid,
-        БЭМ-структура и адаптивная версия сайта.
+        Это учебный проект по адаптивной HTML/CSS-вёрстке.
+        Заявки демонстрируют работу формы: реальные заказы и оплата не выполняются.
       </p>
     </aside>
   </main>
@@ -136,12 +193,15 @@
     <div class="site-footer__inner">
       <p>&copy; 2026 Учебный проект. Все права защищены.</p>
       <p>Дисциплина: Фронтенд и бэкенд разработка</p>
+      <a class="button button--primary to-top" href="#">Наверх</a>
     </div>
   </footer>
 
-  <a class="button button--primary to-top" href="#">Наверх</a>
   <dialog class="order-dialog" id="order-dialog" aria-labelledby="order-dialog-title">
-    <h2 class="order-dialog__title" id="order-dialog-title">Оформление заявки</h2>
+    <div class="order-dialog__header">
+      <h2 class="order-dialog__title" id="order-dialog-title">Оформление заявки</h2>
+      <button class="button button--secondary order-dialog__close" type="button" id="close-order-dialog" aria-label="Закрыть окно заявки" title="Закрыть">×</button>
+    </div>
 
     <form class="order-form" id="order-form" action="#" method="post" novalidate>
       <input id="selected-product" name="selected-product" type="hidden">
@@ -198,7 +258,7 @@
         >
       </div>
 
-      <div class="order-form__field">
+      <div class="order-form__field order-form__field--wide">
         <label class="order-form__label" for="order-topic">Тема заявки</label>
         <select class="order-form__select" id="order-topic" name="topic" required>
           <option value="">Выберите тему</option>
@@ -208,7 +268,7 @@
         </select>
       </div>
 
-      <div class="order-form__field">
+      <div class="order-form__field order-form__field--wide">
         <label class="order-form__label" for="order-comment">Комментарий</label>
         <textarea
           class="order-form__textarea"
@@ -233,7 +293,6 @@
       </div>
 
       <div class="order-form__actions">
-        <button class="button button--secondary" type="button" id="close-order-dialog">Закрыть</button>
         <button class="button button--primary" type="submit">Отправить заявку</button>
       </div>
     </form>
