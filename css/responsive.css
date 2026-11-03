@@ -1,0 +1,519 @@
+/*
+  Адаптивные стили для контрольной работы №3.
+  Подход: Mobile First.
+  Базовые стили рассчитаны на мобильный экран.
+  Расширения добавляются через min-width медиазапросы.
+  Файл подключён после style.css на всех страницах.
+  Здесь будут переопределяться раскладки исходного проекта КР №1.
+*/
+
+/* 1. Общие правила для мобильного экрана */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Открытое модальное окно блокирует прокрутку страницы под ним. */
+body:has(.order-dialog[open]) {
+  overflow: hidden;
+}
+
+/* 2. Контейнеры и отступы */
+:root {
+  --container-width: 1200px;
+  --header-offset: 16px;
+}
+
+/* Боковые отступы задаются один раз на внешних контейнерах.
+   Вложенные разделы используют всю доступную ширину main. */
+main,
+.site-header__inner,
+.site-footer__inner {
+  width: min(100% - 32px, var(--container-width));
+  margin-inline: auto;
+}
+
+main {
+  min-width: 0;
+  padding: clamp(24px, 3vw, 48px) 0;
+}
+
+.section {
+  margin-bottom: clamp(32px, 4vw, 56px);
+  padding-block: 0;
+}
+
+.site-header,
+.site-footer {
+  padding: clamp(16px, 2vw, 24px) 0;
+}
+
+/* 3. Шапка, навигация и хлебные крошки */
+.button {
+  min-height: 44px;
+}
+
+/* На мобильном экране высокая шапка прокручивается вместе со страницей. */
+.site-header {
+  position: static;
+}
+
+.site-header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md, 16px);
+}
+
+.site-header__menu-toggle {
+  min-height: 44px;
+}
+
+.site-header__menu-toggle[hidden],
+.site-nav[hidden] {
+  display: none;
+}
+
+.site-nav {
+  flex-basis: 100%;
+  min-width: 0;
+}
+
+.site-nav__list {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-sm, 8px);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.site-nav__link {
+  display: block;
+  padding: 12px 16px;
+  overflow-wrap: anywhere;
+}
+
+/* 4. Hero-блок */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-lg, 24px);
+  align-items: center;
+  padding: clamp(24px, 4vw, 48px);
+}
+
+.hero__content {
+  display: grid;
+  min-width: 0;
+  gap: var(--space-md, 16px);
+}
+
+.hero__title {
+  margin: 0;
+  font-size: clamp(28px, 7vw, 56px);
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.hero__description {
+  margin: 0;
+}
+
+.hero__actions {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.hero__actions .button {
+  min-height: 44px;
+  text-align: center;
+}
+
+.hero__picture {
+  display: block;
+  min-width: 0;
+}
+
+.hero__image {
+  display: block;
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+  margin-inline: auto;
+}
+
+/* 5. Карточки товаров и отзывы */
+.products-grid,
+.reviews {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-md, 16px);
+}
+
+.product-card,
+.review {
+  min-width: 0;
+}
+
+/* Одинаковая область 4:3; contain сохраняет товар целиком без обрезки. */
+.product-card__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  border-radius: var(--radius-md, 8px);
+}
+
+.product-card__title,
+.product-card__description,
+.review__text,
+.review__author {
+  overflow-wrap: anywhere;
+}
+
+/* 6. Каталог и фильтры */
+.catalog-layout {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "filters"
+    "products";
+  gap: var(--space-lg, 24px);
+  align-items: start;
+}
+
+.catalog-filters,
+.catalog-products,
+.filters-form__group {
+  min-width: 0;
+}
+
+.filters-form__input {
+  min-height: 44px;
+}
+
+/* 7. Страницы товаров и таблицы характеристик */
+.product {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.product__media,
+.product__info {
+  min-width: 0;
+}
+
+.product__title,
+.product__description {
+  overflow-wrap: anywhere;
+}
+
+.product__actions {
+  flex-direction: column;
+}
+
+.product__actions .button {
+  min-height: 44px;
+  text-align: center;
+}
+
+.table-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-wrapper:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+.product-table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+}
+
+.product-table__cell {
+  padding: 12px;
+}
+
+/* 8. Форма заявки и модальное окно */
+.order-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-md, 16px);
+}
+
+.order-form__field {
+  display: grid;
+  min-width: 0;
+  gap: var(--space-xs, 4px);
+  align-content: start;
+  margin: 0;
+}
+
+.order-form__label {
+  margin: 0;
+}
+
+.order-form__input,
+.order-form__select,
+.order-form__textarea {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  font-size: 16px;
+}
+
+.order-form__textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.order-form__hint {
+  margin: 0;
+}
+
+.order-form__field--checkbox .order-form__label {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm, 8px);
+  min-height: 44px;
+}
+
+.order-form__checkbox {
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  margin: 2px 0 0;
+}
+
+.order-form__field--wide,
+.order-form__field--checkbox,
+.order-form__actions {
+  grid-column: 1 / -1;
+}
+
+.order-form__actions {
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin-top: 0;
+}
+
+.order-form__actions .button,
+.order-dialog__close {
+  min-height: 44px;
+}
+
+.order-form--page {
+  max-width: 800px;
+}
+
+.order-dialog {
+  --dialog-padding: clamp(16px, 3vw, 24px);
+  width: min(100% - 32px, 560px);
+  max-width: calc(100% - 32px);
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
+  padding: var(--dialog-padding);
+  overflow: auto;
+  scroll-padding-block: 112px 16px;
+}
+
+.order-dialog::backdrop {
+  background: rgb(0 0 0 / 0.5);
+}
+
+/* Заголовок и закрытие остаются доступны при прокрутке длинной формы. */
+.order-dialog__header {
+  position: sticky;
+  top: calc(-1 * var(--dialog-padding));
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md, 16px);
+  margin: calc(-1 * var(--dialog-padding)) calc(-1 * var(--dialog-padding)) var(--space-md, 16px);
+  padding: var(--dialog-padding);
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.order-dialog__title {
+  min-width: 0;
+  margin: 0;
+  font-size: clamp(20px, 3vw, 24px);
+  overflow-wrap: anywhere;
+}
+
+.order-dialog__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  margin-left: auto;
+  padding: 0;
+  font-size: 28px;
+  line-height: 1;
+}
+
+/* 9. Подвал и кнопка «Наверх» */
+/* Пока нет свободного бокового поля, кнопка занимает место внутри подвала.
+   Так она не закрывает текст, таблицы и поля при любой прокрутке. */
+.to-top {
+  position: static;
+  display: block;
+  width: fit-content;
+  max-width: calc(100% - 32px);
+  min-height: 44px;
+  margin: var(--space-md, 16px) 0 0 auto;
+  text-align: center;
+}
+
+/*
+  10. Расширения для больших экранов.
+  Ширины проверки: 360px, 430px, 768px, 1024px, 1440px.
+*/
+@media (min-width: 640px) {
+  .hero__actions {
+    flex-direction: row;
+  }
+
+  .products-grid,
+  .reviews {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    /* Запас под шапку с меню в две строки при переходе по якорям. */
+    --header-offset: 216px;
+  }
+
+  .site-nav__list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header, 10);
+  }
+
+  .product {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .product__actions,
+  .order-form__actions {
+    flex-direction: row;
+  }
+
+  .order-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 440px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .products-grid,
+  .reviews {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .catalog-layout {
+    grid-template-columns: 280px minmax(0, 1fr);
+    grid-template-areas: "filters products";
+  }
+
+  /* Учитываем место, занятое боковым фильтром. */
+  .catalog-products .products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --header-offset: 112px;
+  }
+
+  .site-header__inner {
+    flex-wrap: nowrap;
+    gap: var(--space-lg, 24px);
+  }
+
+  .site-nav {
+    flex-basis: auto;
+    margin-left: auto;
+  }
+
+  .site-nav__list {
+    justify-content: flex-end;
+  }
+}
+
+@media (min-width: 1280px) {
+  .products-grid {
+    /* Три товара заполняют строку; четвёртая колонка появится с четвёртым товаром. */
+    grid-template-columns: repeat(auto-fit, minmax(254px, 1fr));
+  }
+
+  .catalog-products .products-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* На широком экране кнопка помещается в правом поле вне контейнера 1200px. */
+@media (min-width: 1440px) {
+  .to-top {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    margin: 0;
+    z-index: var(--z-to-top, 20);
+  }
+}
+
+/* Высокий фильтр закрепляется только там, где он помещается по высоте.
+   Отступ учитывает sticky-шапку; на низком экране фильтр прокручивается обычно. */
+@media (min-width: 1024px) and (min-height: 800px) {
+  .catalog-filters {
+    position: sticky;
+    top: var(--header-offset);
+  }
+}
+
+/* В альбомной ориентации шапка не отнимает место у содержимого. */
+@media (min-width: 768px) and (max-height: 599px) {
+  :root {
+    --header-offset: 16px;
+  }
+
+  .site-header {
+    position: static;
+  }
+}
