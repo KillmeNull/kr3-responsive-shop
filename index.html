@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Главная страница учебного интернет-магазина: преимущества, популярные товары и форма заявки.">
+  <title>Главная — Перекупы 1С</title>
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Перекупы 1С">
+  <meta property="og:description" content="Учебный frontend-проект интернет-магазина.">
+  <meta property="og:image" content="https://killmenull.github.io/kr1-html-css-shop/images/preview.jpg">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-header__logo" href="index.html">Перекупы 1С</a>
+
+      <nav class="site-nav" aria-label="Основная навигация">
+        <ul class="site-nav__list">
+          <li class="site-nav__item"><a class="site-nav__link site-nav__link--active" href="index.html">Главная</a></li>
+          <li class="site-nav__item"><a class="site-nav__link" href="catalog.html">Каталог</a></li>
+          <li class="site-nav__item"><a class="site-nav__link" href="contacts.html">Контакты</a></li>
+          <li class="site-nav__item"><a class="site-nav__link" href="index.html#advantages">Преимущества</a></li>
+          <li class="site-nav__item"><a class="site-nav__link" href="index.html#popular">Популярные товары</a></li>
+          <li class="site-nav__item"><a class="site-nav__link" href="index.html#contacts">Обратная связь</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <h1>Учебный интернет-магазин</h1>
+      <p>
+        Это стартовая страница учебного frontend-проекта.
+        В дальнейшем на её основе будет разработан многостраничный сайт
+        интернет-магазина или каталога услуг.
+      </p>
+      <div class="hero__actions">
+        <a class="button button--primary" href="#popular">Перейти к товарам</a>
+        <a class="button button--secondary" href="order.html">Оформить заявку</a>
+      </div>
+    </section>
+    <section class="section" id="advantages">
+      <h2 class="section__title">Наши преимущества</h2>
+
+      <ul class="advantages-list">
+        <li>к коробочке с бухгалтерией прилагается ощущение взрослой жизни;</li>
+        <li>после курса вы начнёте понимать бухгалтера, и это уже не исправить;</li>
+        <li>доставляем за 1–3 дня: дольше держать товар у себя жалко;</li>
+        <li>жёлтый цвет поднимает настроение, даже когда баланс не сходится.</li>
+      </ul>
+    </section>
+    <section class="section" id="popular">
+      <h2 class="section__title">Популярные товары</h2>
+
+      <div class="products-grid">
+        <article class="product-card product-card--featured">
+          <span class="product-card__badge">Хит</span>
+          <img class="product-card__image" src="images/product-1.jpg" alt="Жёлтый настольный калькулятор 1С с красными клавишами" width="440" height="454">
+          <h3 class="product-card__title"><a class="product-card__link" href="product.html">Калькулятор 1С</a></h3>
+          <p class="product-card__description">Настольный 12-разрядный калькулятор в фирменных цветах для бухгалтера и кассира.</p>
+          <p class="product-card__price">Цена: 1000 руб.</p>
+          <button class="button button--primary product-card__button" type="button" data-product="Калькулятор 1С">
+            Заказать
+          </button>
+        </article>
+
+        <article class="product-card">
+          <img class="product-card__image" src="images/product-2.jpg" alt="Жёлтая коробка программы «1С:Бухгалтерия сельскохозяйственного предприятия» с изображением трактора" width="395" height="506">
+          <h3 class="product-card__title"><a class="product-card__link" href="product-2.html">Коробочка 1С:Бухгалтерия</a></h3>
+          <p class="product-card__description">Коробочная версия программы для ведения учёта на сельскохозяйственном предприятии.</p>
+          <p class="product-card__price">Цена: 2000 руб.</p>
+          <button class="button button--primary product-card__button" type="button" data-product="Коробочка 1С:Бухгалтерия">
+            Заказать
+          </button>
+        </article>
+
+        <article class="product-card">
+          <img class="product-card__image" src="images/product-3.jpg" alt="Преподаватель в жёлтой футболке 1С выступает с микрофоном на фоне плаката «1С:ERP»" width="800" height="775">
+          <h3 class="product-card__title"><a class="product-card__link" href="product-3.html">Курс 1С разработчик</a></h3>
+          <p class="product-card__description">Практический курс по разработке на платформе «1С:Предприятие» с опытным наставником.</p>
+          <p class="product-card__price">Цена: 5000 руб.</p>
+          <button class="button button--primary product-card__button" type="button" data-product="Курс 1С разработчик">
+            Заказать
+          </button>
+        </article>
+      </div>
+    </section>
+    <p class="success-message" id="success-message" hidden>
+      Форма успешно отправлена!
+    </p>
+    <section class="section">
+      <h2 class="section__title">Отзывы покупателей</h2>
+
+      <div class="reviews">
+        <figure class="review">
+          <p class="review__rating" role="img" aria-label="Оценка: 5 из 5">★★★★★</p>
+          <blockquote class="review__text">
+            Калькулятор удобный: клавиши крупные, цифры на дисплее хорошо видно.
+            Взяла второй такой же для коллеги.
+          </blockquote>
+          <figcaption class="review__author">Мария, бухгалтер</figcaption>
+        </figure>
+
+        <figure class="review">
+          <p class="review__rating" role="img" aria-label="Оценка: 4 из 5">★★★★☆</p>
+          <blockquote class="review__text">
+            Коробку с программой привезли за два дня. Установили сами,
+            учёт по хозяйству теперь ведём в одной системе.
+          </blockquote>
+          <figcaption class="review__author">Олег, руководитель фермерского хозяйства</figcaption>
+        </figure>
+
+        <figure class="review">
+          <p class="review__rating" role="img" aria-label="Оценка: 5 из 5">★★★★★</p>
+          <blockquote class="review__text">
+            После курса смог сам доработать отчёт на работе.
+            Наставник объясняет понятно и разбирает задачи на примерах.
+          </blockquote>
+          <figcaption class="review__author">Дмитрий, начинающий разработчик</figcaption>
+        </figure>
+      </div>
+    </section>
+    <aside class="aside-info">
+      <h2>Информация для студентов</h2>
+      <p>
+        На следующих практических занятиях этот проект будет расширяться:
+        появятся формы, модальное окно, дополнительные страницы, Flex/Grid,
+        БЭМ-структура и адаптивная версия сайта.
+      </p>
+    </aside>
+  </main>
+  <footer class="site-footer" id="contacts">
+    <div class="site-footer__inner">
+      <p>&copy; 2026 Учебный проект. Все права защищены.</p>
+      <p>Дисциплина: Фронтенд и бэкенд разработка</p>
+    </div>
+  </footer>
+
+  <a class="button button--primary to-top" href="#">Наверх</a>
+  <dialog class="order-dialog" id="order-dialog" aria-labelledby="order-dialog-title">
+    <h2 class="order-dialog__title" id="order-dialog-title">Оформление заявки</h2>
+
+    <form class="order-form" id="order-form" action="#" method="post" novalidate>
+      <input id="selected-product" name="selected-product" type="hidden">
+
+      <div class="order-form__field">
+        <label class="order-form__label" for="order-name">Имя</label>
+        <input
+          class="order-form__input"
+          id="order-name"
+          name="name"
+          type="text"
+          placeholder="Введите ваше имя"
+          minlength="2"
+          autocomplete="given-name"
+          required
+        >
+      </div>
+
+      <div class="order-form__field">
+        <label class="order-form__label" for="order-email">E-mail</label>
+        <input
+          class="order-form__input"
+          id="order-email"
+          name="email"
+          type="email"
+          placeholder="example@mail.ru"
+          autocomplete="email"
+          required
+        >
+      </div>
+
+      <div class="order-form__field">
+        <label class="order-form__label" for="order-phone">Телефон</label>
+        <input
+          class="order-form__input"
+          id="order-phone"
+          name="phone"
+          type="tel"
+          inputmode="tel"
+          placeholder="+7 (900) 000-00-00"
+          pattern="^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$"
+          required
+        >
+        <small class="order-form__hint">Формат: +7 (900) 000-00-00</small>
+      </div>
+
+      <div class="order-form__field">
+        <label class="order-form__label" for="order-date">Дата связи</label>
+        <input
+          class="order-form__input"
+          id="order-date"
+          name="date"
+          type="date"
+        >
+      </div>
+
+      <div class="order-form__field">
+        <label class="order-form__label" for="order-topic">Тема заявки</label>
+        <select class="order-form__select" id="order-topic" name="topic" required>
+          <option value="">Выберите тему</option>
+          <option value="product">Заказ товара</option>
+          <option value="consultation">Консультация</option>
+          <option value="delivery">Доставка</option>
+        </select>
+      </div>
+
+      <div class="order-form__field">
+        <label class="order-form__label" for="order-comment">Комментарий</label>
+        <textarea
+          class="order-form__textarea"
+          id="order-comment"
+          name="comment"
+          rows="4"
+          placeholder="Укажите дополнительную информацию"
+        ></textarea>
+      </div>
+
+      <div class="order-form__field order-form__field--checkbox">
+        <label class="order-form__label">
+          <input
+            class="order-form__checkbox"
+            id="order-agreement"
+            name="agreement"
+            type="checkbox"
+            required
+          >
+          Я согласен на обработку данных
+        </label>
+      </div>
+
+      <div class="order-form__actions">
+        <button class="button button--secondary" type="button" id="close-order-dialog">Закрыть</button>
+        <button class="button button--primary" type="submit">Отправить заявку</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>
