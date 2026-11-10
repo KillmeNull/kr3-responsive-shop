@@ -1,31 +1,14 @@
-/* ===============================
-   1. Переменные проекта
-   =============================== */
+/* Общие стили и мобильная раскладка. Расширения — в responsive.css. */
 
-/*
-  Все значения, которые повторяются в проекте, хранятся в одном месте.
-  Чтобы изменить оформление, достаточно поменять переменную здесь.
-*/
+/* Переменные */
 :root {
-  /*
-    Основные цвета проекта: тёплая жёлтая палитра.
-    Жёлтый используется как заливка (кнопки, активный пункт меню),
-    текст на нём тёмный: белый текст на жёлтом не читается.
-  */
   --color-bg: #ffffff;
   --color-text: #26221a;
   --color-muted: #6b6352;
   --color-primary: #ffd000;
   --color-primary-dark: #e6b800;
   --color-on-primary: #26221a;
-
-  /*
-    Акцентный цвет для ссылок, рамок и обводки фокуса.
-    Тёмно-янтарный: тот же тон, что у жёлтого, но достаточно тёмный,
-    чтобы читаться на белом фоне.
-  */
   --color-accent: #7a5200;
-
   --color-border: #e5dfd0;
   --color-control-border: #8a806d;
   --color-surface: #faf7ee;
@@ -34,62 +17,36 @@
   --color-success: #168a2f;
   --color-success-bg: #eefaf0;
   --color-white: #ffffff;
-
-  /* Логотип: фон основного жёлтого цвета и тёмно-красный текст */
   --color-brand: var(--color-primary);
   --color-brand-text: #b00020;
-
-  /* Отступы */
   --space-xs: 4px;
   --space-sm: 8px;
   --space-md: 16px;
   --space-lg: 24px;
   --space-xl: 32px;
-
-  /* Скругления */
   --radius-sm: 6px;
   --radius-md: 8px;
   --radius-lg: 12px;
-
-  /* Размеры */
-  --container-width: 1100px;
-  --header-offset: 200px;
-
-  /* Слои: чем больше значение, тем выше элемент */
   --z-header: 10;
   --z-to-top: 20;
+  --container-width: 1200px;
+  --header-offset: 16px;
 }
 
-/* ===============================
-   2. Базовые стили
-   =============================== */
-
-/*
-  Универсальное правило для всех элементов.
-  border-box делает расчёт размеров более понятным:
-  width включает content, padding и border.
-*/
-* {
+/* Базовые стили и контейнеры */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
-/*
-  Плавная прокрутка при переходе по якорным ссылкам.
-  Если браузер не поддерживает свойство, ссылка сработает без анимации.
-  scroll-padding-top оставляет место под липкую шапку,
-  чтобы она не закрывала раздел, к которому выполнен переход.
-*/
 html {
-  scroll-behavior: smooth;
+  min-width: 320px;
   scroll-padding-top: var(--header-offset);
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
 }
 
-/*
-  Убираем стандартный внешний отступ браузера у body.
-  Цвет текста и фона берутся из переменных.
-  body — flex-колонка высотой не меньше окна (100vh):
-  шапка, main и подвал идут сверху вниз, а main забирает свободное место.
-*/
 body {
   display: flex;
   flex-direction: column;
@@ -101,24 +58,19 @@ body {
   background-color: var(--color-bg);
 }
 
-/*
-  Внутренние отступы основной области страницы.
-  Шапка и подвал задают свои отступы в блоках site-header и site-footer.
-  flex-grow: 1 растягивает main на всю свободную высоту,
-  поэтому подвал остаётся внизу окна даже на короткой странице.
-*/
-main {
-  flex-grow: 1;
-  padding: var(--space-lg);
+main,
+.site-header__inner,
+.site-footer__inner {
+  width: min(100% - 32px, var(--container-width));
+  margin-inline: auto;
 }
 
-/* ===============================
-   3. Общие элементы интерфейса
-   =============================== */
+main {
+  flex-grow: 1;
+  min-width: 0;
+  padding: clamp(24px, 3vw, 48px) 0;
+}
 
-/*
-  Базовый цвет ссылок и его изменение при наведении.
-*/
 a {
   color: var(--color-accent);
 }
@@ -127,20 +79,7 @@ a:hover {
   color: var(--color-text);
 }
 
-/*
-  Видимая рамка фокуса при навигации с клавиатуры.
-*/
-a:focus-visible {
-  outline: 3px solid var(--color-accent);
-  outline-offset: 3px;
-}
-
-:focus-visible {
-  outline: 3px solid var(--color-accent);
-  outline-offset: 3px;
-}
-
-/* Фокус сегмента нативного поля даты может находиться в shadow DOM браузера. */
+:focus-visible,
 input[type="date"]:focus-within {
   outline: 3px solid var(--color-accent);
   outline-offset: 3px;
@@ -165,23 +104,30 @@ input[type="date"]:focus-within {
   color: var(--color-white);
 }
 
-/*
-  Подсветка элемента, к которому выполнен переход по якорю,
-  например раздела id="popular" после ссылки #popular.
-*/
 :target {
   outline: 2px dashed var(--color-accent);
   outline-offset: 4px;
 }
 
-/*
-  Кнопка — самостоятельный БЭМ-блок.
-  Базовый класс задаёт форму и размеры,
-  цвета задаются модификаторами button--primary и button--secondary.
-  Класс используется и для ссылок, и для элементов button.
-  Прозрачная рамка есть у всех кнопок, чтобы варианты
-  с рамкой и без неё были одного размера.
-*/
+.site-header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+body:has(.order-dialog[open]) {
+  overflow: hidden;
+}
+
+/* Кнопки */
 .button {
   display: inline-block;
   padding: var(--space-sm) var(--space-md);
@@ -190,30 +136,20 @@ input[type="date"]:focus-within {
   font: inherit;
   text-decoration: none;
   cursor: pointer;
+  min-height: 44px;
 }
 
-/*
-  Основной вариант кнопки: жёлтая заливка и тёмный текст.
-  Рамка чуть темнее заливки отделяет кнопку от светлого фона.
-*/
 .button--primary {
   color: var(--color-on-primary);
   background-color: var(--color-primary);
   border-color: var(--color-primary-dark);
 }
 
-/*
-  Цвет текста указан явно, иначе у ссылки-кнопки
-  сработает общее правило a:hover.
-*/
 .button--primary:hover {
   color: var(--color-on-primary);
   background-color: var(--color-primary-dark);
 }
 
-/*
-  Второстепенный вариант кнопки: прозрачный фон и рамка.
-*/
 .button--secondary {
   color: var(--color-accent);
   background-color: transparent;
@@ -225,53 +161,22 @@ input[type="date"]:focus-within {
   background-color: var(--color-primary);
 }
 
-.button:focus-visible {
-  outline: 3px solid var(--color-accent);
-  outline-offset: 3px;
-}
-
-/*
-  Недоступная кнопка приглушается, курсор показывает запрет.
-  Модификатор button--disabled нужен для визуально отключённых ссылок.
-*/
 .button:disabled,
 .button--disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-/* ===============================
-   4. Компоненты страницы
-   =============================== */
-
-/*
-  Шапка сайта.
-  position: sticky оставляет шапку вверху экрана при прокрутке.
-  z-index поднимает её над содержимым страницы.
-*/
+/* Шапка и навигация */
 .site-header {
-  position: sticky;
   top: 0;
   z-index: var(--z-header);
-  padding: var(--space-lg);
   background-color: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
+  padding: clamp(16px, 2vw, 24px) 0;
+  position: static;
 }
 
-/*
-  Внутренний контейнер шапки ограничивает ширину содержимого,
-  чтобы оно не растягивалось слишком сильно на широких экранах.
-*/
-.site-header__inner {
-  max-width: var(--container-width);
-  margin: 0 auto;
-}
-
-/*
-  Текстовый логотип: жёлтая плашка с тёмно-красным текстом.
-  Жёлтым сделан фон, а не буквы: жёлтый текст
-  на светлой шапке было бы невозможно прочитать.
-*/
 .site-header__logo {
   display: inline-block;
   padding: var(--space-xs) var(--space-sm);
@@ -282,64 +187,48 @@ input[type="date"]:focus-within {
   text-decoration: none;
 }
 
-/*
-  Цвет текста указан явно, иначе при наведении
-  сработает общее правило a:hover и текст сменит цвет.
-*/
 .site-header__logo:hover {
   color: var(--color-brand-text);
 }
 
-/*
-  Горизонтальное меню через Flexbox.
-  flex-wrap разрешает перенос пунктов на новую строку,
-  gap задаёт расстояние между пунктами.
-*/
 .site-nav__list {
-  display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  gap: var(--space-md);
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-sm);
   padding: 0;
-  margin: var(--space-md) 0 0;
+  margin: 0;
   list-style: none;
 }
 
-/*
-  Ссылки меню.
-  inline-block позволяет задать внутренние отступы
-  и увеличить кликабельную область.
-*/
 .site-nav__link {
-  display: inline-block;
-  padding: var(--space-sm) var(--space-md);
   color: var(--color-text);
   text-decoration: none;
   border-radius: var(--radius-sm);
+  display: block;
+  padding: 12px 16px;
+  overflow-wrap: anywhere;
 }
 
-.site-nav__link:hover {
-  color: var(--color-on-primary);
-  background-color: var(--color-primary);
-}
-
-.site-nav__link:focus-visible {
-  outline: 3px solid var(--color-accent);
-  outline-offset: 3px;
-}
-
-/*
-  Модификатор активного пункта: ссылка на текущую страницу.
-*/
+.site-nav__link:hover,
 .site-nav__link--active {
   color: var(--color-on-primary);
   background-color: var(--color-primary);
 }
 
-/*
-  Хлебные крошки на внутренних страницах.
-*/
+.site-header__menu-toggle[hidden],
+.site-nav[hidden] {
+  display: none;
+}
+
+.site-nav {
+  flex-basis: 100%;
+  min-width: 0;
+}
+
+/* Хлебные крошки */
 .breadcrumbs {
   max-width: var(--container-width);
   margin: 0 auto var(--space-md);
@@ -351,67 +240,84 @@ input[type="date"]:focus-within {
   color: var(--color-accent);
 }
 
-/*
-  Текущая страница не является ссылкой.
-  Перед её названием ставится разделитель.
-*/
 .breadcrumbs__current::before {
   content: " / ";
   color: var(--color-muted);
 }
 
-/*
-  Hero-блок — первый крупный блок страницы.
-*/
+/* Главный блок и разделы */
 .hero {
   max-width: var(--container-width);
   margin: 0 auto var(--space-xl);
-  padding: var(--space-xl) var(--space-lg);
   background-color: var(--color-surface-accent);
   border-radius: var(--radius-lg);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-lg);
+  align-items: center;
+  padding: clamp(24px, 4vw, 48px);
 }
 
-/*
-  Кнопки в hero-блоке стоят в ряд с промежутком.
-*/
 .hero__actions {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   gap: var(--space-md);
+  align-items: stretch;
 }
 
-/*
-  Общий класс для разделов страницы.
-*/
 .section {
   max-width: var(--container-width);
-  margin: 0 auto var(--space-xl);
+  margin: 0 auto clamp(32px, 4vw, 56px);
+  padding-block: 0;
 }
 
-/*
-  Заголовок раздела.
-*/
 .section__title {
   margin-top: 0;
 }
 
-/*
-  Сетка карточек товаров через CSS Grid.
-  repeat(3, 1fr) создаёт три равные колонки,
-  gap задаёт расстояние между карточками.
-*/
-.products-grid {
+.hero__content {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-lg);
+  min-width: 0;
+  gap: var(--space-md);
 }
 
-/*
-  Карточка товара — переиспользуемый БЭМ-блок.
-  Карточка сама является flex-контейнером:
-  содержимое идёт сверху вниз, расстояние между элементами задаёт gap.
-  position: relative делает карточку точкой отсчёта для бейджа.
-*/
+.hero__title {
+  margin: 0;
+  font-size: clamp(28px, 7vw, 56px);
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.hero__description {
+  margin: 0;
+}
+
+.hero__actions .button {
+  text-align: center;
+}
+
+.hero__picture {
+  display: block;
+  min-width: 0;
+}
+
+.hero__image {
+  display: block;
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+  margin-inline: auto;
+}
+
+/* Карточки товаров */
+.products-grid,
+.reviews {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-md);
+}
+
 .product-card {
   position: relative;
   display: flex;
@@ -421,15 +327,10 @@ input[type="date"]:focus-within {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background-color: var(--color-bg);
+  min-width: 0;
 }
 
-.product-card:hover {
-  border-color: var(--color-accent);
-}
-
-/*
-  Модификаторы карточки: выделенный товар и товар со скидкой.
-*/
+.product-card:hover,
 .product-card--featured {
   border-color: var(--color-accent);
 }
@@ -438,33 +339,21 @@ input[type="date"]:focus-within {
   border-color: var(--color-danger);
 }
 
-/*
-  Фото товара в карточке.
-  aspect-ratio задаёт одинаковую область 4:3 для всех карточек,
-  object-fit: contain вписывает в неё фото целиком, без обрезки.
-*/
 .product-card__image {
   display: block;
   width: 100%;
   height: auto;
   aspect-ratio: 4 / 3;
   object-fit: contain;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
 }
 
-/*
-  Элементы карточки. Внешние отступы обнулены,
-  расстояние между элементами задаёт gap карточки.
-*/
 .product-card__title {
   margin: 0;
   color: var(--color-text);
+  overflow-wrap: anywhere;
 }
 
-/*
-  Название товара — ссылка на его страницу.
-  Цвет наследуется от заголовка, подчёркивание появляется при наведении.
-*/
 .product-card__link {
   color: inherit;
   text-decoration: none;
@@ -477,6 +366,7 @@ input[type="date"]:focus-within {
 .product-card__description {
   margin: 0;
   color: var(--color-muted);
+  overflow-wrap: anywhere;
 }
 
 .product-card__price {
@@ -484,11 +374,6 @@ input[type="date"]:focus-within {
   font-weight: 700;
 }
 
-/*
-  Бейдж в правом верхнем углу карточки: «Хит», «Скидка».
-  position: absolute выводит его из потока
-  и размещает относительно карточки.
-*/
 .product-card__badge {
   position: absolute;
   top: var(--space-sm);
@@ -500,73 +385,51 @@ input[type="date"]:focus-within {
   border-radius: var(--radius-sm);
 }
 
-/*
-  Модификатор блока меняет вид своего элемента:
-  у товара со скидкой цена выделяется цветом.
-*/
 .product-card--discount .product-card__price {
   color: var(--color-danger);
 }
 
-/*
-  Кнопка прижимается к низу карточки
-  и не растягивается на всю ширину.
-*/
 .product-card__button {
   margin-top: auto;
   align-self: flex-start;
 }
 
-/*
-  Страница каталога: фильтры слева, товары справа.
-  Первая колонка 260px отводится под фильтры,
-  вторая 1fr занимает оставшееся пространство.
-  grid-template-areas задаёт именованные области сетки.
-*/
+/* Каталог и фильтры */
 .catalog-layout {
   max-width: var(--container-width);
   margin: 0 auto var(--space-xl);
   display: grid;
-  grid-template-columns: 260px 1fr;
-  grid-template-areas: "filters products";
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "filters" "products";
   gap: var(--space-lg);
+  align-items: start;
 }
 
-/*
-  Боковая область фильтров.
-*/
 .catalog-filters {
   grid-area: filters;
   padding: var(--space-md);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background-color: var(--color-surface);
+  min-width: 0;
 }
 
-/*
-  Область со списком товаров.
-*/
 .catalog-products {
   grid-area: products;
+  min-width: 0;
 }
 
-/*
-  Форма фильтров.
-  Группы полей идут друг под другом, расстояние между ними задаёт gap.
-*/
 .filters-form {
   display: grid;
   gap: var(--space-md);
 }
 
-/*
-  Группа полей: fieldset визуально отделяет группы фильтров.
-*/
 .filters-form__group {
   margin: 0;
   padding: var(--space-md);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
+  min-width: 0;
 }
 
 .filters-form__legend {
@@ -578,41 +441,30 @@ input[type="date"]:focus-within {
   margin-bottom: var(--space-sm);
 }
 
-/*
-  Числовые поля цены.
-*/
 .filters-form__input {
   width: 100%;
   padding: 8px 10px;
   border: 1px solid var(--color-control-border);
   border-radius: var(--radius-sm);
   font: inherit;
+  min-height: 44px;
 }
 
-/*
-  Страница товара: изображение слева, описание справа.
-*/
+/* Страница товара и таблица */
 .product {
   max-width: var(--container-width);
   margin: 0 auto var(--space-xl);
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: var(--space-lg);
   align-items: start;
+  grid-template-columns: minmax(0, 1fr);
 }
 
-/*
-  У figure есть стандартные внешние отступы браузера, убираем их.
-*/
 .product__media {
   margin: 0;
+  min-width: 0;
 }
 
-/*
-  Фото товара на его странице.
-  Область 4:3 одинакова для всех товаров,
-  фото вписывается в неё целиком, без обрезки.
-*/
 .product__image {
   display: block;
   width: 100%;
@@ -626,6 +478,7 @@ input[type="date"]:focus-within {
 
 .product__title {
   margin-top: 0;
+  overflow-wrap: anywhere;
 }
 
 .product__price {
@@ -633,21 +486,16 @@ input[type="date"]:focus-within {
   font-weight: 700;
 }
 
-/*
-  Кнопки под описанием товара.
-*/
 .product__actions {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   gap: var(--space-md);
 }
 
-/*
-  Таблица характеристик товара.
-  border-collapse объединяет рамки соседних ячеек в одну линию.
-*/
 .product-table {
   width: 100%;
+  min-width: 640px;
   border-collapse: collapse;
 }
 
@@ -658,32 +506,35 @@ input[type="date"]:focus-within {
 }
 
 .product-table__cell {
-  padding: var(--space-sm) var(--space-md);
   border: 1px solid var(--color-border);
   text-align: left;
+  padding: 12px;
 }
 
-/*
-  Ячейки заголовка таблицы.
-*/
 .product-table__cell--head {
   background-color: var(--color-surface);
 }
 
-/*
-  Блок отзывов: три карточки в ряд через CSS Grid.
-*/
-.reviews {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-lg);
+.product__info {
+  min-width: 0;
 }
 
-/*
-  Карточка отзыва.
-  У figure есть стандартные внешние отступы браузера, убираем их.
-  Карточка — flex-колонка, чтобы подпись автора прижималась к низу.
-*/
+.product__description {
+  overflow-wrap: anywhere;
+}
+
+.product__actions .button {
+  text-align: center;
+}
+
+.table-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Отзывы и сообщения */
 .review {
   display: flex;
   flex-direction: column;
@@ -693,34 +544,27 @@ input[type="date"]:focus-within {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background-color: var(--color-surface);
+  min-width: 0;
 }
 
-/*
-  Оценка звёздами. Текст оценки для программ чтения с экрана
-  задан в HTML через aria-label.
-*/
 .review__rating {
   margin: 0;
   color: var(--color-brand-text);
   letter-spacing: 2px;
 }
 
-/*
-  У blockquote тоже есть стандартные отступы браузера.
-*/
 .review__text {
   margin: 0;
+  overflow-wrap: anywhere;
 }
 
 .review__author {
   margin-top: auto;
   font-size: 14px;
   color: var(--color-muted);
+  overflow-wrap: anywhere;
 }
 
-/*
-  Дополнительный информационный блок.
-*/
 .aside-info {
   max-width: var(--container-width);
   margin: 0 auto var(--space-xl);
@@ -729,9 +573,6 @@ input[type="date"]:focus-within {
   background-color: var(--color-surface);
 }
 
-/*
-  Сообщение об успешной отправке формы.
-*/
 .success-message {
   max-width: var(--container-width);
   margin: var(--space-lg) auto;
@@ -740,98 +581,62 @@ input[type="date"]:focus-within {
   background-color: var(--color-success-bg);
 }
 
-/*
-  Подвал сайта.
-*/
+/* Подвал */
 .site-footer {
-  padding: var(--space-lg);
   background-color: var(--color-surface);
+  padding: clamp(16px, 2vw, 24px) 0;
 }
 
-/*
-  Внутренний контейнер подвала ограничивает ширину содержимого
-  и ставит его по центру, как в шапке и разделах страницы.
-  Без него на широком экране или при уменьшении масштаба
-  текст подвала прижимался к левому краю окна.
-*/
-.site-footer__inner {
-  max-width: var(--container-width);
-  margin: 0 auto;
-}
-
-/*
-  Кнопка «Наверх».
-  position: fixed закрепляет её в правом нижнем углу окна,
-  при прокрутке она остаётся на месте.
-*/
 .to-top {
-  position: fixed;
   right: var(--space-lg);
   bottom: var(--space-lg);
   z-index: var(--z-to-top);
+  position: static;
+  display: block;
+  width: fit-content;
+  max-width: calc(100% - 32px);
+  min-height: 44px;
+  margin: var(--space-md) 0 0 auto;
+  text-align: center;
 }
 
-/* ===============================
-   5. Форма и модальное окно
-   =============================== */
-
-/*
-  Модальное окно.
-  Элемент dialog сам умеет открываться поверх страницы.
-*/
-.order-dialog {
-  width: min(100% - 32px, 560px);
-  padding: var(--space-lg);
-  border: none;
-  border-radius: var(--radius-lg);
-}
-
-/*
-  Затемнение фона за модальным окном.
-*/
-.order-dialog::backdrop {
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.order-dialog__title {
-  margin-top: 0;
-}
-
-/*
-  Форма заявки — отдельный БЭМ-блок,
-  её можно использовать и вне модального окна.
-  Поле формы: подпись и элемент ввода.
-*/
+/* Форма заявки */
 .order-form__field {
-  margin-bottom: var(--space-md);
+  display: grid;
+  min-width: 0;
+  gap: var(--space-xs);
+  align-content: start;
+  margin: 0;
 }
 
 .order-form__label {
   display: block;
-  margin-bottom: var(--space-xs);
+  margin: 0;
 }
 
-/*
-  Основные поля формы.
-  font: inherit заставляет поля использовать шрифт страницы.
-*/
+/* Общие поля; textarea отличается только высотой и изменением размера. */
 .order-form__input,
 .order-form__select,
 .order-form__textarea {
   width: 100%;
+  min-width: 0;
+  min-height: 44px;
   padding: 10px 12px;
   border: 1px solid var(--color-control-border);
   border-radius: var(--radius-sm);
   font: inherit;
+  font-size: 16px;
 }
 
-/*
-  Подсказка под полем.
-*/
+.order-form__textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
 .order-form__hint {
   display: block;
-  margin-top: var(--space-xs);
   color: var(--color-muted);
+  margin: 0;
 }
 
 .order-form__error,
@@ -853,50 +658,103 @@ input[type="date"]:focus-within {
   font-weight: 700;
 }
 
-/*
-  Реакция поля на наведение мыши.
-*/
 .order-form__input:hover,
 .order-form__select:hover,
 .order-form__textarea:hover {
   border-color: var(--color-accent);
 }
 
-/*
-  Видимый фокус для клавиатурной навигации.
-*/
-.order-form__input:focus-visible,
-.order-form__select:focus-visible,
-.order-form__textarea:focus-visible {
-  outline: 3px solid var(--color-accent);
-  outline-offset: 3px;
-}
-
-/*
-  Подсветка ошибочных полей.
-  Атрибут aria-invalid добавляется через JavaScript.
-  Правило стоит после :hover: специфичность у них одинаковая,
-  поэтому красная рамка сохраняется и при наведении.
-*/
 .order-form__input[aria-invalid="true"],
 .order-form__select[aria-invalid="true"],
 .order-form__textarea[aria-invalid="true"] {
   border-color: var(--color-danger);
 }
 
-/*
-  Кнопки формы.
-*/
 .order-form__actions {
   display: flex;
   gap: var(--space-md);
-  margin-top: var(--space-lg);
+  grid-column: 1 / -1;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin-top: 0;
 }
 
-/*
-  Модификатор формы на отдельной странице:
-  без модального окна ширину формы нужно ограничить.
-*/
 .order-form--page {
-  max-width: 560px;
+  max-width: 800px;
+}
+
+.order-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-md);
+}
+
+.order-form__field--checkbox .order-form__label {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  min-height: 44px;
+}
+
+.order-form__checkbox {
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  margin: 2px 0 0;
+}
+
+.order-form__field--wide,
+.order-form__field--checkbox {
+  grid-column: 1 / -1;
+}
+
+/* Модальное окно */
+.order-dialog {
+  border: none;
+  border-radius: var(--radius-lg);
+  --dialog-padding: clamp(16px, 3vw, 24px);
+  width: min(100% - 32px, 560px);
+  max-width: calc(100% - 32px);
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
+  padding: var(--dialog-padding);
+  overflow: auto;
+  scroll-padding-block: 112px 16px;
+}
+
+.order-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.order-dialog__title {
+  min-width: 0;
+  margin: 0;
+  font-size: clamp(20px, 3vw, 24px);
+  overflow-wrap: anywhere;
+}
+
+.order-dialog__close {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  margin-left: auto;
+  padding: 0;
+  font-size: 28px;
+  line-height: 1;
+}
+
+.order-dialog__header {
+  position: sticky;
+  top: calc(-1 * var(--dialog-padding));
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-md);
+  margin: calc(-1 * var(--dialog-padding)) calc(-1 * var(--dialog-padding)) var(--space-md);
+  padding: var(--dialog-padding);
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
 }

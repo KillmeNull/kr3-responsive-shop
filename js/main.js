@@ -1,4 +1,4 @@
-// На мобильном экране меню открывается кнопкой, без JavaScript ссылки видны сразу.
+// Мобильное меню и перенос фокуса.
 const menuToggle = document.querySelector('.site-header__menu-toggle');
 const siteNavigation = document.querySelector('.site-nav');
 
@@ -6,11 +6,11 @@ if (menuToggle && siteNavigation) {
   const mobileNavigation = window.matchMedia('(max-width: 767px)');
   let menuExpanded = false;
 
-  const updateNavigation = () => {
+  function updateNavigation() {
     menuToggle.hidden = !mobileNavigation.matches;
     menuToggle.setAttribute('aria-expanded', String(menuExpanded));
     siteNavigation.hidden = mobileNavigation.matches && !menuExpanded;
-  };
+  }
 
   menuToggle.addEventListener('click', () => {
     menuExpanded = !menuExpanded;
@@ -21,7 +21,6 @@ if (menuToggle && siteNavigation) {
     if (event.target.closest('a') && mobileNavigation.matches) {
       menuExpanded = false;
       updateNavigation();
-      // Якорь ведёт в содержимое; скрытая ссылка меню не должна удерживать фокус.
       const link = event.target.closest('a');
       const destination = new URL(link.href);
       if (destination.pathname === location.pathname && destination.hash) {
@@ -56,25 +55,14 @@ if (menuToggle && siteNavigation) {
   updateNavigation();
 }
 
-// Получаем модальное окно по id.
-// На страницах без модального окна (например, order.html) здесь будет null.
+// Диалог: выбранный товар, открытие, закрытие и обход клавишей Tab.
 const orderDialog = document.getElementById('order-dialog');
-
-// Получаем все кнопки заказа в карточках товаров.
 const orderButtons = document.querySelectorAll('.product-card__button');
-
-// Получаем кнопку закрытия модального окна.
 const closeDialogButton = document.getElementById('close-order-dialog');
-
-// Получаем скрытое поле, в которое будет записан выбранный товар.
 const selectedProductInput = document.getElementById('selected-product');
 const selectedProductDescription = document.getElementById('order-dialog-product');
 
-// Модальное окно есть только на главной странице,
-// поэтому его обработчики подключаем, только если оно найдено.
 if (orderDialog) {
-  // Явно замыкаем Tab на границах диалога: некоторые браузеры после последнего
-  // поля переводят фокус в свою панель, хотя фон страницы остаётся inert.
   orderDialog.addEventListener('keydown', (event) => {
     if (event.key !== 'Tab') return;
     const controls = Array.from(orderDialog.querySelectorAll(
@@ -90,37 +78,25 @@ if (orderDialog) {
       first.focus();
     }
   });
-
-  // Перебираем все кнопки «Заказать».
   orderButtons.forEach((button) => {
     button.addEventListener('click', () => {
-      // Получаем название товара из data-атрибута.
+      successMessage.hidden = true;
       const productName = button.dataset.product;
-
-      // Записываем название товара в скрытое поле формы.
       selectedProductInput.value = productName;
       selectedProductDescription.textContent = `Выбранный товар: ${productName}.`;
-
-      // Открываем модальное окно.
       orderDialog.showModal();
     });
   });
-
-  // Закрываем модальное окно по кнопке «Закрыть».
   closeDialogButton.addEventListener('click', () => {
     orderDialog.close();
   });
 }
 
-// Получаем форму заявки.
-// Она есть на главной странице (в модальном окне) и на странице order.html.
+// Форма: связанные текстовые ошибки и учебная отправка без сервера.
 const orderForm = document.getElementById('order-form');
-
-// Получаем сообщение об успешной отправке.
 const successMessage = document.getElementById('success-message');
 
 if (orderForm) {
-  // Без JavaScript остаётся встроенная HTML-валидация.
   orderForm.noValidate = true;
   const formSummary = document.getElementById('order-form-summary');
   const fields = Array.from(orderForm.elements).filter(element => element.willValidate);
@@ -183,36 +159,20 @@ if (orderForm) {
     });
     updateSummary();
   });
-
-  // Обрабатываем отправку формы.
   orderForm.addEventListener('submit', (event) => {
-    // Отменяем стандартную отправку формы,
-    // потому что backend пока не подключён.
     event.preventDefault();
-
-    // Прячем сообщение об успехе от предыдущей отправки.
     successMessage.hidden = true;
-
-    // Используем HTML-ограничения, а ошибки показываем постоянным текстом.
     const invalidFields = fields.filter(updateFieldError);
     updateSummary();
     if (invalidFields.length) {
       invalidFields[0].focus();
       return;
     }
-
-    // Показываем сообщение об успешной отправке.
     successMessage.hidden = false;
-
-    // Очищаем форму.
     orderForm.reset();
-
-    // Закрываем модальное окно, если форма находится в нём.
     if (orderDialog) {
       orderDialog.close();
     }
-
-    // Фокус сообщает результат и не остаётся на очищенной форме.
     successMessage.focus({ preventScroll: true });
     successMessage.scrollIntoView({ block: 'center' });
   });
